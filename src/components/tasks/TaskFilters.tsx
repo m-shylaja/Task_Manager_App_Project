@@ -6,7 +6,8 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { CalendarIcon, Search } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { CalendarIcon, Search, Filter, X, RotateCcw } from 'lucide-react';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 
@@ -18,6 +19,7 @@ interface TaskFiltersProps {
 export const TaskFiltersComponent = ({ filters, onFiltersChange }: TaskFiltersProps) => {
   const [startDate, setStartDate] = useState<Date | undefined>();
   const [endDate, setEndDate] = useState<Date | undefined>();
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const handleStatusChange = (status: string) => {
     onFiltersChange({
@@ -43,16 +45,81 @@ export const TaskFiltersComponent = ({ filters, onFiltersChange }: TaskFiltersPr
     });
   };
 
+  const clearAllFilters = () => {
+    setStartDate(undefined);
+    setEndDate(undefined);
+    onFiltersChange({});
+  };
+
+  const activeFiltersCount = [
+    filters.status,
+    filters.keyword,
+    filters.dateRange?.start,
+    filters.dateRange?.end
+  ].filter(Boolean).length;
+
   return (
-    <div className="bg-white p-4 rounded-lg border space-y-4">
-      <h3 className="font-medium text-gray-900">Filters</h3>
+    <div className="bg-white rounded-xl border border-gray-200 p-6 space-y-4 shadow-sm">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-2">
+            <Filter className="h-5 w-5 text-gray-600" />
+            <h3 className="font-semibold text-gray-900">Filters</h3>
+          </div>
+          {activeFiltersCount > 0 && (
+            <Badge variant="secondary" className="text-xs">
+              {activeFiltersCount} active
+            </Badge>
+          )}
+        </div>
+        
+        <div className="flex items-center space-x-2">
+          {activeFiltersCount > 0 && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={clearAllFilters}
+              className="text-gray-500 hover:text-gray-700"
+            >
+              <RotateCcw className="h-4 w-4 mr-1" />
+              Clear
+            </Button>
+          )}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="lg:hidden"
+          >
+            {isExpanded ? <X className="h-4 w-4" /> : <Filter className="h-4 w-4" />}
+          </Button>
+        </div>
+      </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className={cn(
+        "grid gap-4 transition-all duration-200",
+        isExpanded || "lg:grid-cols-4",
+        !isExpanded && "hidden lg:grid"
+      )}>
+        {/* Keyword Search */}
+        <div className="space-y-2">
+          <label className="block text-sm font-medium text-gray-700">Search</label>
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+            <Input
+              placeholder="Search tasks..."
+              className="pl-10 border-gray-200 focus:border-primary"
+              onChange={(e) => handleKeywordChange(e.target.value)}
+              value={filters.keyword || ''}
+            />
+          </div>
+        </div>
+
         {/* Status Filter */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
-          <Select onValueChange={handleStatusChange} defaultValue="all">
-            <SelectTrigger>
+        <div className="space-y-2">
+          <label className="block text-sm font-medium text-gray-700">Status</label>
+          <Select onValueChange={handleStatusChange} value={filters.status || 'all'}>
+            <SelectTrigger className="border-gray-200 focus:border-primary">
               <SelectValue placeholder="All statuses" />
             </SelectTrigger>
             <SelectContent>
@@ -64,28 +131,15 @@ export const TaskFiltersComponent = ({ filters, onFiltersChange }: TaskFiltersPr
           </Select>
         </div>
 
-        {/* Keyword Search */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Search</label>
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-            <Input
-              placeholder="Search tasks..."
-              className="pl-10"
-              onChange={(e) => handleKeywordChange(e.target.value)}
-            />
-          </div>
-        </div>
-
         {/* Start Date */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Start Date</label>
+        <div className="space-y-2">
+          <label className="block text-sm font-medium text-gray-700">Start Date</label>
           <Popover>
             <PopoverTrigger asChild>
               <Button
                 variant="outline"
                 className={cn(
-                  "w-full justify-start text-left font-normal",
+                  "w-full justify-start text-left font-normal border-gray-200 focus:border-primary",
                   !startDate && "text-muted-foreground"
                 )}
               >
@@ -109,14 +163,14 @@ export const TaskFiltersComponent = ({ filters, onFiltersChange }: TaskFiltersPr
         </div>
 
         {/* End Date */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">End Date</label>
+        <div className="space-y-2">
+          <label className="block text-sm font-medium text-gray-700">End Date</label>
           <Popover>
             <PopoverTrigger asChild>
               <Button
                 variant="outline"
                 className={cn(
-                  "w-full justify-start text-left font-normal",
+                  "w-full justify-start text-left font-normal border-gray-200 focus:border-primary",
                   !endDate && "text-muted-foreground"
                 )}
               >

@@ -19,26 +19,44 @@ const Index = () => {
   const renderContent = () => {
     switch (activeSection) {
       case 'users':
-        return <UsersList />;
+        return (
+          <div className="animate-fade-in">
+            <UsersList />
+          </div>
+        );
       case 'projects':
-        return <ProjectsList onProjectSelect={handleProjectSelect} />;
+        return (
+          <div className="animate-fade-in">
+            <ProjectsList onProjectSelect={handleProjectSelect} />
+          </div>
+        );
       case 'tasks':
-        return <TasksList selectedProject={selectedProject} />;
+        return (
+          <div className="animate-fade-in">
+            <TasksList selectedProject={selectedProject} />
+          </div>
+        );
       default:
-        return <ProjectsList onProjectSelect={handleProjectSelect} />;
+        return (
+          <div className="animate-fade-in">
+            <ProjectsList onProjectSelect={handleProjectSelect} />
+          </div>
+        );
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50">
       <Header />
       <div className="flex h-[calc(100vh-73px)]">
         <Sidebar 
           activeSection={activeSection} 
           onSectionChange={setActiveSection} 
         />
-        <main className="flex-1 p-6 overflow-auto">
-          {renderContent()}
+        <main className="flex-1 p-8 overflow-auto">
+          <div className="max-w-7xl mx-auto">
+            {renderContent()}
+          </div>
         </main>
       </div>
     </div>
