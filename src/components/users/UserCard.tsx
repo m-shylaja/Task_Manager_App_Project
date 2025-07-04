@@ -15,54 +15,57 @@ interface UserCardProps {
 
 export const UserCard = ({ user, onEdit, onDelete }: UserCardProps) => {
   return (
-    <Card className="hover-lift group border-0 shadow-sm hover:shadow-md bg-white">
-      <CardContent className="p-6">
-        <div className="flex items-start justify-between mb-4">
-          <div className="flex items-center space-x-4">
-            <Avatar className="h-12 w-12 ring-2 ring-primary/20">
-              <AvatarFallback className="bg-gradient-to-r from-primary to-blue-600 text-white text-lg font-semibold">
+    <Card className="beautiful-card hover-lift group overflow-hidden animate-scale-in">
+      <div className="h-1 bg-gradient-to-r from-primary to-blue-600"></div>
+      
+      <CardContent className="p-8">
+        <div className="flex items-start justify-between mb-6">
+          <div className="flex items-center space-x-5">
+            <Avatar className="h-16 w-16 ring-4 ring-primary/20 shadow-lg">
+              <AvatarFallback className="bg-gradient-to-br from-primary to-blue-600 text-white text-xl font-semibold">
                 {user.name.split(' ').map(n => n[0]).join('')}
               </AvatarFallback>
             </Avatar>
             <div>
-              <h3 className="font-semibold text-gray-900 mb-1">{user.name}</h3>
-              <div className="flex items-center text-sm text-gray-500 mb-2">
-                <Mail className="h-3 w-3 mr-1" />
-                {user.email}
+              <h3 className="font-bold text-xl text-slate-900 mb-2">{user.name}</h3>
+              <div className="flex items-center text-slate-600 mb-3">
+                <Mail className="h-4 w-4 mr-2" />
+                <span className="font-medium">{user.email}</span>
               </div>
-              <div className="flex items-center text-xs text-gray-400">
-                <Calendar className="h-3 w-3 mr-1" />
+              <div className="flex items-center text-sm text-slate-400">
+                <Calendar className="h-4 w-4 mr-2" />
                 Joined {format(new Date(user.createdAt), 'MMM yyyy')}
               </div>
             </div>
           </div>
           
-          <div className="flex space-x-1 opacity-0 group-hover:opacity-100 transition-opacity">
+          <div className="flex space-x-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
             <Button
               variant="ghost"
               size="sm"
               onClick={() => onEdit(user)}
-              className="h-8 w-8 p-0 hover:bg-primary/10 hover:text-primary"
+              className="h-10 w-10 p-0 hover:bg-primary/10 hover:text-primary rounded-xl transition-all duration-300 hover:scale-110"
             >
-              <Edit className="h-4 w-4" />
+              <Edit className="h-5 w-5" />
             </Button>
             <Button
               variant="ghost"
               size="sm"
               onClick={() => onDelete(user.id)}
-              className="h-8 w-8 p-0 hover:bg-red-50 hover:text-red-600"
+              className="h-10 w-10 p-0 hover:bg-red-50 hover:text-red-600 rounded-xl transition-all duration-300 hover:scale-110"
             >
-              <Trash2 className="h-4 w-4" />
+              <Trash2 className="h-5 w-5" />
             </Button>
           </div>
         </div>
 
-        <div className="flex justify-between items-center">
-          <Badge variant="secondary" className="text-xs">
+        <div className="flex justify-between items-center pt-4 border-t border-slate-100">
+          <Badge className="bg-emerald-100 text-emerald-700 border-emerald-200 px-3 py-1 rounded-full font-medium">
             Team Member
           </Badge>
-          <div className="text-xs text-gray-400">
-            Active
+          <div className="flex items-center space-x-2">
+            <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+            <span className="text-sm text-emerald-600 font-medium">Active</span>
           </div>
         </div>
       </CardContent>

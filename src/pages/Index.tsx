@@ -20,25 +20,25 @@ const Index = () => {
     switch (activeSection) {
       case 'users':
         return (
-          <div className="animate-fade-in">
+          <div className="animate-slide-up">
             <UsersList />
           </div>
         );
       case 'projects':
         return (
-          <div className="animate-fade-in">
+          <div className="animate-slide-up">
             <ProjectsList onProjectSelect={handleProjectSelect} />
           </div>
         );
       case 'tasks':
         return (
-          <div className="animate-fade-in">
+          <div className="animate-slide-up">
             <TasksList selectedProject={selectedProject} />
           </div>
         );
       default:
         return (
-          <div className="animate-fade-in">
+          <div className="animate-slide-up">
             <ProjectsList onProjectSelect={handleProjectSelect} />
           </div>
         );
@@ -46,7 +46,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30">
       <Header />
       <div className="flex h-[calc(100vh-73px)]">
         <Sidebar 

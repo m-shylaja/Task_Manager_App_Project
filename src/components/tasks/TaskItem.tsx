@@ -54,65 +54,67 @@ export const TaskItem = ({
   const hasSubtasks = task.subtasks && task.subtasks.length > 0;
 
   return (
-    <div className={cn("space-y-3", level > 0 && "task-tree-line")}>
+    <div className={cn("space-y-4", level > 0 && "task-tree-line")}>
       <Card className={cn(
-        "transition-all duration-200 hover:shadow-md group border-l-4",
-        isOverdue && "border-l-red-500 bg-red-50/30",
-        isDueSoon && !isOverdue && "border-l-yellow-500 bg-yellow-50/30",
-        task.status === 'done' && "border-l-green-500 bg-green-50/30",
-        task.status === 'in-progress' && "border-l-blue-500 bg-blue-50/30",
-        task.status === 'todo' && "border-l-gray-300"
+        "beautiful-card group border-l-4 transition-all duration-300 animate-fade-in",
+        isOverdue && "border-l-red-500 bg-red-50/30 shadow-red-100",
+        isDueSoon && !isOverdue && "border-l-amber-500 bg-amber-50/30 shadow-amber-100",
+        task.status === 'done' && "border-l-emerald-500 bg-emerald-50/30 shadow-emerald-100",
+        task.status === 'in-progress' && "border-l-blue-500 bg-blue-50/30 shadow-blue-100",
+        task.status === 'todo' && "border-l-slate-300"
       )}>
-        <CardContent className="p-4">
+        <CardContent className="p-6">
           <div className="flex items-start justify-between">
-            <div className="flex items-start space-x-3 flex-1">
+            <div className="flex items-start space-x-4 flex-1">
               {hasSubtasks && (
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={() => setIsExpanded(!isExpanded)}
-                  className="p-1 h-6 w-6 hover:bg-gray-100 transition-colors"
+                  className="p-2 h-8 w-8 hover:bg-slate-100 transition-all duration-300 rounded-xl"
                 >
                   {isExpanded ? (
-                    <ChevronDown className="h-4 w-4 text-gray-500" />
+                    <ChevronDown className="h-5 w-5 text-slate-500" />
                   ) : (
-                    <ChevronRight className="h-4 w-4 text-gray-500" />
+                    <ChevronRight className="h-5 w-5 text-slate-500" />
                   )}
                 </Button>
               )}
               
-              <div className="flex-1 space-y-3">
-                <div className="flex items-center space-x-3">
-                  <h4 className="font-medium text-gray-900 group-hover:text-primary transition-colors">
+              <div className="flex-1 space-y-4">
+                <div className="flex items-center space-x-4 flex-wrap gap-2">
+                  <h4 className="font-bold text-lg text-slate-900 group-hover:text-primary transition-colors duration-300">
                     {task.name}
                   </h4>
                   
-                  <Badge className={cn("text-xs font-medium", getStatusStyles(task.status))}>
+                  <Badge className={cn("font-semibold px-3 py-1 rounded-full", getStatusStyles(task.status))}>
                     {getStatusLabel(task.status)}
                   </Badge>
                   
                   {isOverdue && (
-                    <Badge className="overdue-indicator text-xs font-medium">
-                      <AlertCircle className="h-3 w-3 mr-1" />
+                    <Badge className="overdue-indicator font-semibold px-3 py-1 rounded-full animate-pulse">
+                      <AlertCircle className="h-4 w-4 mr-2" />
                       Overdue
                     </Badge>
                   )}
                   
                   {isDueSoon && !isOverdue && (
-                    <Badge className="bg-yellow-100 text-yellow-700 text-xs font-medium">
-                      <Clock className="h-3 w-3 mr-1" />
+                    <Badge className="bg-amber-100 text-amber-800 border-amber-200 font-semibold px-3 py-1 rounded-full">
+                      <Clock className="h-4 w-4 mr-2" />
                       Due Soon
                     </Badge>
                   )}
                 </div>
                 
                 {task.description && (
-                  <p className="text-sm text-gray-600 leading-relaxed">{task.description}</p>
+                  <p className="text-slate-600 leading-relaxed bg-slate-50 rounded-xl p-4 border border-slate-200">
+                    {task.description}
+                  </p>
                 )}
                 
                 {task.dueDate && (
-                  <div className="flex items-center text-xs text-gray-500">
-                    <Calendar className="h-3 w-3 mr-1" />
+                  <div className="flex items-center text-slate-500 bg-white rounded-lg px-3 py-2 border border-slate-200 w-fit">
+                    <Calendar className="h-4 w-4 mr-2" />
                     Due {format(new Date(task.dueDate), 'MMM dd, yyyy')}
                   </div>
                 )}
@@ -120,33 +122,33 @@ export const TaskItem = ({
             </div>
             
             {canEdit && (
-              <div className="flex space-x-1 opacity-0 group-hover:opacity-100 transition-opacity">
+              <div className="flex space-x-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={() => onAddSubtask(task)}
-                  className="h-8 w-8 p-0 hover:bg-blue-50 hover:text-blue-600"
+                  className="h-10 w-10 p-0 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-all duration-300 hover:scale-110"
                   title="Add subtask"
                 >
-                  <Plus className="h-4 w-4" />
+                  <Plus className="h-5 w-5" />
                 </Button>
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={() => onEdit(task)}
-                  className="h-8 w-8 p-0 hover:bg-gray-50 hover:text-gray-700"
+                  className="h-10 w-10 p-0 hover:bg-slate-50 hover:text-slate-700 rounded-xl transition-all duration-300 hover:scale-110"
                   title="Edit task"
                 >
-                  <Edit className="h-4 w-4" />
+                  <Edit className="h-5 w-5" />
                 </Button>
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={() => onDelete(task.id)}
-                  className="h-8 w-8 p-0 hover:bg-red-50 hover:text-red-600"
+                  className="h-10 w-10 p-0 hover:bg-red-50 hover:text-red-600 rounded-xl transition-all duration-300 hover:scale-110"
                   title="Delete task"
                 >
-                  <Trash2 className="h-4 w-4" />
+                  <Trash2 className="h-5 w-5" />
                 </Button>
               </div>
             )}
@@ -156,7 +158,7 @@ export const TaskItem = ({
 
       {/* Render subtasks */}
       {isExpanded && hasSubtasks && (
-        <div className="space-y-3 animate-fade-in">
+        <div className="space-y-4 animate-slide-up">
           {task.subtasks!.map(subtask => (
             <TaskItem
               key={subtask.id}

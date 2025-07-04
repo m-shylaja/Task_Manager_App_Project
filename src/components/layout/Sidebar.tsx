@@ -18,31 +18,31 @@ export const Sidebar = ({ activeSection, onSectionChange }: SidebarProps) => {
   ];
 
   return (
-    <aside className="w-72 bg-gradient-to-b from-slate-50 to-white border-r border-slate-200/60 h-full">
-      <div className="p-6 space-y-6">
-        {/* Quick Actions */}
-        <div className="space-y-3">
+    <aside className="w-80 bg-gradient-to-b from-slate-50 to-white border-r border-slate-200/60 h-full shadow-xl backdrop-blur-sm">
+      <div className="p-8 space-y-8">
+        {/* Enhanced Quick Actions */}
+        <div className="space-y-4">
           <Button 
-            className="w-full bg-gradient-to-r from-primary to-blue-600 hover:from-primary/90 hover:to-blue-600/90 shadow-lg hover:shadow-xl transition-all duration-300"
-            size="sm"
+            className="w-full modern-button rounded-xl py-3 text-base font-semibold shadow-lg"
+            size="lg"
           >
-            <Plus className="h-4 w-4 mr-2" />
+            <Plus className="h-5 w-5 mr-3" />
             New Project
           </Button>
           
           <Button 
             variant="outline" 
-            className="w-full border-dashed border-gray-300 hover:border-primary hover:bg-primary/5 transition-colors"
-            size="sm"
+            className="w-full subtle-button rounded-xl py-3 text-base border-dashed hover:border-solid transition-all duration-300"
+            size="lg"
           >
-            <Plus className="h-4 w-4 mr-2" />
+            <Plus className="h-5 w-5 mr-3" />
             Quick Task
           </Button>
         </div>
         
-        {/* Navigation */}
-        <nav className="space-y-2">
-          <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider px-3 mb-4">
+        {/* Enhanced Navigation */}
+        <nav className="space-y-3">
+          <div className="text-xs font-bold text-slate-500 uppercase tracking-wider px-4 mb-6">
             Navigation
           </div>
           {menuItems.map((item) => {
@@ -54,38 +54,41 @@ export const Sidebar = ({ activeSection, onSectionChange }: SidebarProps) => {
                 key={item.id}
                 onClick={() => onSectionChange(item.id)}
                 className={cn(
-                  "w-full flex items-center px-4 py-3 text-left rounded-xl transition-all duration-200 group",
+                  "w-full flex items-center px-6 py-4 text-left rounded-2xl transition-all duration-300 group relative overflow-hidden",
                   isActive
-                    ? "bg-gradient-to-r from-primary/10 to-blue-600/10 text-primary border border-primary/20 shadow-sm"
-                    : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                    ? "bg-gradient-to-r from-primary/15 to-blue-600/15 text-primary border border-primary/30 shadow-lg scale-105"
+                    : "text-slate-600 hover:bg-slate-100 hover:text-slate-900 hover:scale-105 hover:shadow-md"
                 )}
               >
                 <Icon className={cn(
-                  "h-5 w-5 mr-3 transition-colors",
-                  isActive ? "text-primary" : "text-gray-400 group-hover:text-gray-600"
+                  "h-6 w-6 mr-4 transition-all duration-300",
+                  isActive ? "text-primary scale-110" : "text-slate-400 group-hover:text-slate-600 group-hover:scale-110"
                 )} />
-                <span className="font-medium">{item.label}</span>
+                <span className="font-semibold text-base">{item.label}</span>
                 {isActive && (
-                  <div className="ml-auto w-2 h-2 bg-primary rounded-full"></div>
+                  <>
+                    <div className="ml-auto w-3 h-3 bg-primary rounded-full animate-pulse-glow"></div>
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent rounded-2xl"></div>
+                  </>
                 )}
               </button>
             );
           })}
         </nav>
 
-        {/* Recent Projects */}
-        <div className="pt-6 border-t border-gray-200">
-          <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider px-3 mb-3">
+        {/* Enhanced Recent Projects */}
+        <div className="pt-8 border-t border-slate-200">
+          <div className="text-xs font-bold text-slate-500 uppercase tracking-wider px-4 mb-4">
             Recent Projects
           </div>
-          <div className="space-y-2">
+          <div className="space-y-3">
             {['Website Redesign', 'Mobile App', 'Marketing Campaign'].map((project, index) => (
-              <div key={project} className="flex items-center px-3 py-2 text-sm text-gray-600 hover:text-gray-900 cursor-pointer rounded-lg hover:bg-gray-50 transition-colors">
+              <div key={project} className="flex items-center px-4 py-3 text-sm text-slate-600 hover:text-slate-900 cursor-pointer rounded-xl hover:bg-slate-50 transition-all duration-300 hover:scale-105 group">
                 <div className={cn(
-                  "w-3 h-3 rounded-full mr-3",
-                  index === 0 ? "bg-green-400" : index === 1 ? "bg-yellow-400" : "bg-blue-400"
+                  "w-4 h-4 rounded-full mr-4 shadow-sm transition-all duration-300 group-hover:scale-125",
+                  index === 0 ? "bg-emerald-400" : index === 1 ? "bg-amber-400" : "bg-blue-400"
                 )}></div>
-                {project}
+                <span className="font-medium">{project}</span>
               </div>
             ))}
           </div>
