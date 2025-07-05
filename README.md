@@ -3,6 +3,7 @@
 
 **URL**: https://lovable.dev/projects/ebde860c-60eb-49ba-ab6f-791d52a9e600
 
+![Uploading image.png…]()
 
 
 **Use your preferred IDE**
