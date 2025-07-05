@@ -5,8 +5,6 @@
 
 
 
-Simply visit the (https://lovable.dev/projects/ebde860c-60eb-49ba-ab6f-791d52a9e600) and start prompting.
-
 **Use your preferred IDE**
 
 The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
